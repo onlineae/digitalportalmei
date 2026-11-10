@@ -413,12 +413,20 @@ img, svg, video, canvas {
 
 <div id="bg3dCanvas" class="bg-3d-canvas"></div>
 
-<header><div class="wrap nav">
-  <a class="logo" href="#" style="display: flex; align-items: center; gap: 12px;">
-    <img src="imagem1.png.PNG" alt="Imagem 1" style="height: 36px; width: auto; object-fit: contain;">
-    <img src="imagem2.png.PNG" alt="Imagem 2" style="height: 36px; width: auto; object-fit: contain;">
-    <img src="logo.png" alt="Meu MEI Digital" style="height: 48px; width: auto; border-radius: 10px; object-fit: contain;">
-  </a>
+<header><div class="wrap nav" style="position: relative; display: flex; align-items: center; justify-content: space-between;">
+  <!-- Imagens da esquerda -->
+  <div style="display: flex; align-items: center; gap: 14px;">
+    <!-- 1ª Imagem: Aumentada para 66px (nítida e com bom destaque) -->
+    <img src="imagem1.png.PNG" alt="Imagem 1" style="height: 66px; width: auto; object-fit: contain;">
+    
+    <!-- 2ª Imagem: Mantida no tamanho padrão de 56px -->
+    <img src="imagem2.png.PNG" alt="Imagem 2" style="height: 56px; width: auto; object-fit: contain;">
+  </div>
+
+  <!-- 3ª Imagem: Centralizada no cabeçalho -->
+  <div style="position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center;">
+    <img src="logo.png" alt="Meu MEI Digital" style="height: 42px; width: auto; border-radius: 12px; object-fit: contain;">
+  </div>
 </div></header>
 
 <section class="hero"><div class="wrap grid">
