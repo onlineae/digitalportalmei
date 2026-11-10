@@ -414,34 +414,37 @@ img, svg, video, canvas {
 <div id="bg3dCanvas" class="bg-3d-canvas"></div>
 
 <header><div class="wrap nav nav-responsiva">
-  <!-- Imagens da esquerda -->
-  <div class="nav-imgs-esq">
+  <!-- 1ª Imagem: Esquerda (66px no PC e no Celular) -->
+  <div class="nav-img-1">
     <img src="imagem1.png.PNG" alt="Imagem 1" class="img-1-top">
-    
-  <!-- Imagem central (Meu MEI Digital) -->
+  </div>
+
+  <!-- 3ª Imagem: Centro Exato da tela (PC e Celular) -->
   <div class="nav-img-centro">
     <img src="logo.png" alt="Meu MEI Digital" class="img-3-top">
   </div>
+
+  <!-- 2ª Imagem: Direita -->
+  <div class="nav-img-2">
+    <img src="imagem2.png.PNG" alt="Imagem 2" class="img-2-top">
+  </div>
 </div></header>
+
 <style>
 .nav-responsiva {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  min-height: 80px;
 }
-.nav-imgs-esq {
+.nav-img-1 {
   display: flex;
   align-items: center;
-  gap: 14px;
+  z-index: 2;
 }
 .img-1-top {
-  height: 54px;
-  width: auto;
-  object-fit: contain;
-}
-.img-2-top {
-  height: 36px;
+  height: 66px !important;
   width: auto;
   object-fit: contain;
 }
@@ -451,6 +454,8 @@ img, svg, video, canvas {
   transform: translateX(-50%);
   display: flex;
   align-items: center;
+  justify-content: center;
+  z-index: 10;
 }
 .img-3-top {
   height: 48px;
@@ -458,26 +463,36 @@ img, svg, video, canvas {
   border-radius: 12px;
   object-fit: contain;
 }
-/* Responsividade Mobile: sem sobreposição e proporcional */
+.nav-img-2 {
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+.img-2-top {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Regras para Celular: Mantém 66px na esquerda e Logo 100% no CENTRO */
 @media (max-width: 600px) {
-  .nav-imgs-esq {
-    gap: 8px !important;
+  .nav-responsiva {
+    min-height: 82px !important;
+    padding: 8px 0 !important;
   }
   .img-1-top {
-    height: 34px !important;
-  }
-  .img-2-top {
-    height: 24px !important;
+    height: 66px !important; /* Exatamente 66px no celular */
   }
   .nav-img-centro {
-    position: static !important;
-    transform: none !important;
+    position: absolute !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important; /* 100% no centro da tela no celular */
   }
   .img-3-top {
-    height: 36px !important;
+    height: 42px !important;
   }
-  .img-3-top {
-    height: 36px !important;
+  .img-2-top {
+    height: 30px !important;
   }
 }
 </style>
