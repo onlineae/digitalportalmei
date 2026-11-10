@@ -413,19 +413,74 @@ img, svg, video, canvas {
 
 <div id="bg3dCanvas" class="bg-3d-canvas"></div>
 
-<header><div class="wrap nav" style="position: relative; display: flex; align-items: center; justify-content: space-between;">
+<header><div class="wrap nav nav-responsiva">
   <!-- Imagens da esquerda -->
-  <div style="display: flex; align-items: center; gap: 14px;">
-    <!-- 1ª Imagem: Aumentada para 66px (nítida e com bom destaque) -->
-    <img src="imagem1.png.PNG" alt="Imagem 1" style="height: 66px; width: auto; object-fit: contain;">
+  <div class="nav-imgs-esq">
+    <img src="imagem1.png.PNG" alt="Imagem 1" class="img-1-top">
     
-  
-
-  <!-- 3ª Imagem: Centralizada no cabeçalho -->
-  <div style="position: absolute; left: 50%; transform: translateX(-50%); display: flex; align-items: center;">
-    <img src="logo.png" alt="Meu MEI Digital" style="height: 42px; width: auto; border-radius: 12px; object-fit: contain;">
+  <!-- Imagem central (Meu MEI Digital) -->
+  <div class="nav-img-centro">
+    <img src="logo.png" alt="Meu MEI Digital" class="img-3-top">
   </div>
 </div></header>
+<style>
+.nav-responsiva {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-imgs-esq {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.img-1-top {
+  height: 54px;
+  width: auto;
+  object-fit: contain;
+}
+.img-2-top {
+  height: 36px;
+  width: auto;
+  object-fit: contain;
+}
+.nav-img-centro {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+}
+.img-3-top {
+  height: 48px;
+  width: auto;
+  border-radius: 12px;
+  object-fit: contain;
+}
+/* Responsividade Mobile: sem sobreposição e proporcional */
+@media (max-width: 600px) {
+  .nav-imgs-esq {
+    gap: 8px !important;
+  }
+  .img-1-top {
+    height: 34px !important;
+  }
+  .img-2-top {
+    height: 24px !important;
+  }
+  .nav-img-centro {
+    position: static !important;
+    transform: none !important;
+  }
+  .img-3-top {
+    height: 36px !important;
+  }
+  .img-3-top {
+    height: 36px !important;
+  }
+}
+</style>
 
 <section class="hero"><div class="wrap grid">
   <div>
