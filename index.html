@@ -414,19 +414,14 @@ img, svg, video, canvas {
 <div id="bg3dCanvas" class="bg-3d-canvas"></div>
 
 <header><div class="wrap nav nav-responsiva">
-  <!-- 1ª Imagem: Esquerda (66px no PC e no Celular) -->
+  <!-- Imagem da Esquerda (52px no Celular) -->
   <div class="nav-img-1">
-    <img src="imagem1.png.PNG" alt="Imagem 1" class="img-1-top">
+    <img src="imagem1.png" alt="Imagem 1" class="img-1-top">
   </div>
 
-  <!-- 3ª Imagem: Centro Exato da tela (PC e Celular) -->
+  <!-- Imagem Centralizada (Meu MEI Digital no Centro Exato) -->
   <div class="nav-img-centro">
     <img src="logo.png" alt="Meu MEI Digital" class="img-3-top">
-  </div>
-
-  <!-- 2ª Imagem: Direita -->
-  <div class="nav-img-2">
-    <img src="imagem2.png.PNG" alt="Imagem 2" class="img-2-top">
   </div>
 </div></header>
 
@@ -436,7 +431,7 @@ img, svg, video, canvas {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 80px;
+  min-height: 74px;
 }
 .nav-img-1 {
   display: flex;
@@ -444,7 +439,7 @@ img, svg, video, canvas {
   z-index: 2;
 }
 .img-1-top {
-  height: 66px !important;
+  height: 56px;
   width: auto;
   object-fit: contain;
 }
@@ -463,36 +458,23 @@ img, svg, video, canvas {
   border-radius: 12px;
   object-fit: contain;
 }
-.nav-img-2 {
-  display: flex;
-  align-items: center;
-  z-index: 2;
-}
-.img-2-top {
-  height: 36px;
-  width: auto;
-  object-fit: contain;
-}
 
-/* Regras para Celular: Mantém 66px na esquerda e Logo 100% no CENTRO */
+/* Regras para Celular: 52px na esquerda e Logo no Centro Exato */
 @media (max-width: 600px) {
   .nav-responsiva {
-    min-height: 82px !important;
-    padding: 8px 0 !important;
+    min-height: 74px !important;
+    padding: 6px 0 !important;
   }
   .img-1-top {
-    height: 66px !important; /* Exatamente 66px no celular */
+    height: 52px !important; /* 52px no celular */
   }
   .nav-img-centro {
     position: absolute !important;
     left: 50% !important;
-    transform: translateX(-50%) !important; /* 100% no centro da tela no celular */
+    transform: translateX(-50%) !important; /* 100% no meio da tela no celular */
   }
   .img-3-top {
     height: 42px !important;
-  }
-  .img-2-top {
-    height: 30px !important;
   }
 }
 </style>
