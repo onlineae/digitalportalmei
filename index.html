@@ -573,6 +573,142 @@ header {
     height: 42px !important;
   }
 }
+
+
+/* ==========================================================================
+   FORMULÁRIO MULTI-ETAPAS LÚDICO (Inscrição ProsperaMei)
+   ========================================================================== */
+.form-steps-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px 0 22px;
+  position: relative;
+}
+.step-dot-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  z-index: 2;
+  cursor: pointer;
+  user-select: none;
+}
+.step-dot {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: 2px solid var(--line);
+  color: var(--mut);
+  display: grid;
+  place-items: center;
+  font-size: 13px;
+  font-weight: 800;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.step-dot-wrap.active .step-dot {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: #fff;
+  box-shadow: 0 0 0 5px rgba(15, 111, 255, 0.18);
+  transform: scale(1.08);
+}
+.step-dot-wrap.done .step-dot {
+  background: #0ea58a;
+  border-color: #0ea58a;
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(14, 165, 138, 0.15);
+}
+.step-dot-label {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--mut);
+  transition: color 0.3s ease;
+}
+.step-dot-wrap.active .step-dot-label {
+  color: var(--brand);
+}
+.step-dot-wrap.done .step-dot-label {
+  color: #0ea58a;
+}
+.step-connector-line {
+  flex: 1;
+  height: 3px;
+  background: var(--line);
+  margin: -18px 8px 0;
+  transition: background 0.4s ease;
+  border-radius: 99px;
+}
+.step-connector-line.active {
+  background: #0ea58a;
+}
+.step-pill-indicator {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #0b7a66;
+  background: #e6f9f5;
+  border: 1px solid #a4ecd9;
+  padding: 4px 11px;
+  border-radius: 99px;
+  margin-bottom: 12px;
+}
+.step-pane {
+  display: block;
+}
+.step-pane.hidden {
+  display: none !important;
+}
+.step-animate-in {
+  animation: stepEntrance 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes stepEntrance {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+.step-buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 14px;
+}
+.btn-voltar {
+  background: #f1f5f9 !important;
+  color: var(--ink) !important;
+  border: 1.5px solid var(--line) !important;
+  padding: 13px 18px !important;
+  font-weight: 700;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-voltar:hover {
+  background: #e2e8f0 !important;
+  border-color: #cbd5e1 !important;
+  transform: translateY(-1px);
+}
+
+
+@media (max-width: 480px) {
+  .step-dot {
+    width: 30px !important;
+    height: 30px !important;
+    font-size: 12px !important;
+  }
+  .step-dot-label {
+    font-size: 10px !important;
+  }
+  .step-connector-line {
+    margin: -15px 4px 0 !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -611,33 +747,98 @@ header {
         <div id="loadingProgressBar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--brand),#0f6fff);border-radius:99px;transition:width .45s ease"></div>
       </div>
     </div>
-    <form id="qualificationForm" onsubmit="handleQualificationSubmit(event)">
-      <div class="row">
-        <div class="f"><label for="cnpjInput">CNPJ</label>
-          <input id="cnpjInput" placeholder="00.000.000/0000-00" maxlength="18" inputmode="numeric" required>
-          <div id="cnpjError" class="err hidden">Digite os 14 números do CNPJ.</div></div>
-        <div class="f"><label for="tempoCnpjInput">Tempo de CNPJ</label>
-          <select id="tempoCnpjInput" required><option value="" disabled selected>Selecione</option>
-            <option>De 1 a 2 anos</option><option>De 2 a 5 anos</option><option>Mais de 5 anos</option><option>Menos de 1 ano</option></select></div>
+    <form id="qualificationForm" onsubmit="handleQualificationSubmit(event)" novalidate>
+      <!-- Indicador Lúdico de Progresso (Passo a Passo) -->
+      <div class="form-steps-nav">
+        <div class="step-dot-wrap active" id="stepDot1" onclick="if(currentFormStep>1) prevStep(1)">
+          <div class="step-dot">1</div>
+          <span class="step-dot-label">CNPJ</span>
+        </div>
+        <div class="step-connector-line" id="stepLine1"></div>
+        <div class="step-dot-wrap" id="stepDot2" onclick="if(currentFormStep>2) prevStep(2)">
+          <div class="step-dot">2</div>
+          <span class="step-dot-label">Situação</span>
+        </div>
+        <div class="step-connector-line" id="stepLine2"></div>
+        <div class="step-dot-wrap" id="stepDot3">
+          <div class="step-dot">3</div>
+          <span class="step-dot-label">Benefício</span>
+        </div>
       </div>
 
-      <div class="f"><label for="dividaEstimadaInput">Valor aproximado da dívida</label>
-        <select id="dividaEstimadaInput" required><option value="" disabled selected>Selecione</option>
-          <option>Até R$ 1.000,00</option><option>De R$ 1.000,00 a R$ 3.000,00</option><option>De R$ 3.000,00 a R$ 7.500,00</option>
-          <option>Acima de R$ 7.500,00 (ou Dívida Ativa PGFN)</option><option>Não sei o valor</option></select></div>
-      <div class="f"><label for="motivoSel">Porque você precisa desse beneficio?</label>
-        <select id="motivoSel" required onchange="document.getElementById('motivoHidden').value=this.value">
-          <option value="" disabled selected>Selecione uma opção</option>
-          <option value="Desejo regularizar meu Cnpj">Desejo regularizar meu Cnpj</option>
-          <option value="Uma nova oportunidade para meu negócio">Uma nova oportunidade para meu negócio</option>
-          <option value="Conseguir um Empréstimo para meu CNPJ">Conseguir um Empréstimo para meu CNPJ</option>
-          <option value="Reconstruir a credibilidade do meu negócio">Reconstruir a credibilidade do meu negócio</option>
-        </select>
-        <input type="radio" name="motivoInscricao" id="motivoHidden" class="hidden" checked></div>
-      <label class="chk"><input type="checkbox" id="reqOk" required><span>Confirmo que meu MEI atende aos requisitos da inscrição do programa.</span></label>
-      
-      <button class="btn block" type="submit">Me Inscrever no Programa →</button>
-      <p class="safe">Ambiente seguro com criptografia SSL 256-bit.</p>
+      <!-- ETAPA 1: Somente o CNPJ -->
+      <div id="stepPane1" class="step-pane step-animate-in">
+        <span class="step-pill-indicator">Etapa 1 de 3: Identificação</span>
+        <div class="f">
+          <label for="cnpjInput">Informe o CNPJ da sua empresa</label>
+          <input id="cnpjInput" placeholder="00.000.000/0000-00" maxlength="18" inputmode="numeric" autocomplete="off" autofocus>
+          <div id="cnpjError" class="err hidden">Digite os 14 números do CNPJ para prosseguir.</div>
+        </div>
+        <button type="button" class="btn block" id="btnStep1" onclick="nextStep(2)">Continuar →</button>
+      </div>
+
+      <!-- ETAPA 2: Tempo de CNPJ e Valor da Dívida -->
+      <div id="stepPane2" class="step-pane hidden">
+        <span class="step-pill-indicator">Etapa 2 de 3: Perfil do MEI</span>
+        <div class="f">
+          <label for="tempoCnpjInput">Tempo de CNPJ</label>
+          <select id="tempoCnpjInput">
+            <option value="" disabled selected>Selecione o tempo</option>
+            <option>De 1 a 2 anos</option>
+            <option>De 2 a 5 anos</option>
+            <option>Mais de 5 anos</option>
+            <option>Menos de 1 ano</option>
+          </select>
+          <div id="tempoError" class="err hidden">Selecione o tempo de atuação do seu CNPJ.</div>
+        </div>
+
+        <div class="f">
+          <label for="dividaEstimadaInput">Valor aproximado da dívida</label>
+          <select id="dividaEstimadaInput">
+            <option value="" disabled selected>Selecione a faixa aproximada</option>
+            <option>Até R$ 1.000,00</option>
+            <option>De R$ 1.000,00 a R$ 3.000,00</option>
+            <option>De R$ 3.000,00 a R$ 7.500,00</option>
+            <option>Acima de R$ 7.500,00 (ou Dívida Ativa PGFN)</option>
+            <option>Não sei o valor</option>
+          </select>
+          <div id="dividaError" class="err hidden">Selecione a estimativa da dívida.</div>
+        </div>
+
+        <div class="step-buttons">
+          <button type="button" class="btn btn-voltar" onclick="prevStep(1)">← Voltar</button>
+          <button type="button" class="btn block" style="flex:1" onclick="nextStep(3)">Continuar →</button>
+        </div>
+      </div>
+
+      <!-- ETAPA 3: Motivo, Checkbox e Inscrição -->
+      <div id="stepPane3" class="step-pane hidden">
+        <span class="step-pill-indicator">Etapa 3 de 3: Finalização</span>
+        <div class="f">
+          <label for="motivoSel">Porque você precisa desse beneficio?</label>
+          <select id="motivoSel" onchange="document.getElementById('motivoHidden').value=this.value">
+            <option value="" disabled selected>Selecione uma opção</option>
+            <option value="Desejo regularizar meu Cnpj">Desejo regularizar meu Cnpj</option>
+            <option value="Uma nova oportunidade para meu negócio">Uma nova oportunidade para meu negócio</option>
+            <option value="Conseguir um Empréstimo para meu CNPJ">Conseguir um Empréstimo para meu CNPJ</option>
+            <option value="Reconstruir a credibilidade do meu negócio">Reconstruir a credibilidade do meu negócio</option>
+          </select>
+          <input type="radio" name="motivoInscricao" id="motivoHidden" class="hidden" checked>
+          <div id="motivoError" class="err hidden">Selecione o motivo da solicitação.</div>
+        </div>
+
+        <label class="chk">
+          <input type="checkbox" id="reqOk">
+          <span>Confirmo que meu MEI atende aos requisitos da inscrição do programa.</span>
+        </label>
+        <div id="checkError" class="err hidden" style="margin-bottom:10px">Marque a caixa para confirmar o enquadramento.</div>
+
+        <div class="step-buttons">
+          <button type="button" class="btn btn-voltar" onclick="prevStep(2)">← Voltar</button>
+          <button class="btn block" style="flex:1" type="submit">Me Inscrever no Programa →</button>
+        </div>
+        <p class="safe">Ambiente seguro com criptografia SSL 256-bit.</p>
+      </div>
     </form>
   </div>
 </div></section>
@@ -1010,20 +1211,126 @@ header {
       return (v || '').replace(/\D/g, '');
     }
 
+    let currentFormStep = 1;
+
+    function nextStep(targetStep) {
+      if (targetStep === 2) {
+        const cnpjRaw = document.getElementById('cnpjInput').value;
+        const digits = cleanDigits(cnpjRaw);
+        if (digits.length < 14) {
+          document.getElementById('cnpjError').classList.remove('hidden');
+          document.getElementById('cnpjInput').focus();
+          return;
+        }
+        document.getElementById('cnpjError').classList.add('hidden');
+      } else if (targetStep === 3) {
+        const tempo = document.getElementById('tempoCnpjInput').value;
+        const divida = document.getElementById('dividaEstimadaInput').value;
+        let hasErr = false;
+        if (!tempo) {
+          document.getElementById('tempoError').classList.remove('hidden');
+          hasErr = true;
+        } else {
+          document.getElementById('tempoError').classList.add('hidden');
+        }
+        if (!divida) {
+          document.getElementById('dividaError').classList.remove('hidden');
+          hasErr = true;
+        } else {
+          document.getElementById('dividaError').classList.add('hidden');
+        }
+        if (hasErr) return;
+      }
+      showStep(targetStep);
+    }
+
+    function prevStep(targetStep) {
+      showStep(targetStep);
+    }
+
+    function showStep(step) {
+      currentFormStep = step;
+      const p1 = document.getElementById('stepPane1');
+      const p2 = document.getElementById('stepPane2');
+      const p3 = document.getElementById('stepPane3');
+
+      const b1 = document.getElementById('stepDot1');
+      const b2 = document.getElementById('stepDot2');
+      const b3 = document.getElementById('stepDot3');
+
+      const l1 = document.getElementById('stepLine1');
+      const l2 = document.getElementById('stepLine2');
+
+      p1.classList.toggle('hidden', step !== 1);
+      p2.classList.toggle('hidden', step !== 2);
+      p3.classList.toggle('hidden', step !== 3);
+
+      const activePane = step === 1 ? p1 : (step === 2 ? p2 : p3);
+      activePane.classList.remove('step-animate-in');
+      void activePane.offsetWidth;
+      activePane.classList.add('step-animate-in');
+
+      b1.classList.toggle('active', step === 1);
+      b1.classList.toggle('done', step > 1);
+      l1.classList.toggle('active', step > 1);
+
+      b2.classList.toggle('active', step === 2);
+      b2.classList.toggle('done', step > 2);
+      l2.classList.toggle('active', step > 2);
+
+      b3.classList.toggle('active', step === 3);
+
+      if (step === 1) {
+        setTimeout(() => document.getElementById('cnpjInput').focus(), 80);
+      } else if (step === 2) {
+        setTimeout(() => document.getElementById('tempoCnpjInput').focus(), 80);
+      } else if (step === 3) {
+        setTimeout(() => document.getElementById('motivoSel').focus(), 80);
+      }
+    }
+
     function handleQualificationSubmit(e) {
       e.preventDefault();
+
+      // Validar Etapa 1
       const cnpjRaw = document.getElementById('cnpjInput').value;
       const digits = cleanDigits(cnpjRaw);
       if (digits.length < 14) {
+        showStep(1);
         document.getElementById('cnpjError').classList.remove('hidden');
         return;
       }
-      document.getElementById('cnpjError').classList.add('hidden');
 
+      // Validar Etapa 2
       const tempoCnpj = document.getElementById('tempoCnpjInput').value;
       const divida = document.getElementById('dividaEstimadaInput').value;
-      const motivoEl = document.querySelector('input[name="motivoInscricao"]:checked');
-      const motivo = motivoEl ? motivoEl.value : 'Regularização de CNPJ';
+      if (!tempoCnpj || !divida) {
+        showStep(2);
+        if (!tempoCnpj) document.getElementById('tempoError').classList.remove('hidden');
+        if (!divida) document.getElementById('dividaError').classList.remove('hidden');
+        return;
+      }
+
+      // Validar Etapa 3
+      const motivo = document.getElementById('motivoSel').value;
+      const reqOk = document.getElementById('reqOk').checked;
+      let hasErr = false;
+
+      if (!motivo) {
+        document.getElementById('motivoError').classList.remove('hidden');
+        hasErr = true;
+      } else {
+        document.getElementById('motivoError').classList.add('hidden');
+      }
+
+      if (!reqOk) {
+        document.getElementById('checkError').classList.remove('hidden');
+        hasErr = true;
+      } else {
+        document.getElementById('checkError').classList.add('hidden');
+      }
+
+      if (hasErr) return;
 
       const protocolo = 'MLX-' + digits.substring(0, 4) + '-' + Math.floor(1000 + Math.random() * 8999);
 
@@ -1048,31 +1355,29 @@ header {
       statusTxt.textContent = 'Consultando base de dados do CNPJ ' + currentSessionData.cnpj + '...';
 
       setTimeout(() => {
-        if (statusTxt) statusTxt.textContent = 'Localizando pendências e histórico cadastral...';
-        if (pBar) pBar.style.width = '48%';
-      }, 1000);
+        pBar.style.width = '60%';
+        statusTxt.textContent = 'Verificando enquadramento no programa Prospera MEI...';
+      }, 1300);
 
       setTimeout(() => {
-        if (statusTxt) statusTxt.textContent = 'Calculando redução de parcelas e antecipação DAS...';
-        if (pBar) pBar.style.width = '75%';
-      }, 2200);
+        pBar.style.width = '90%';
+        statusTxt.textContent = 'Calculando estimativa de regularização e guias...';
+      }, 2600);
 
       setTimeout(() => {
-        if (statusTxt) statusTxt.textContent = 'Finalizando validação do enquadramento e gerando protocolo...';
-        if (pBar) pBar.style.width = '92%';
-      }, 3200);
+        pBar.style.width = '100%';
+        statusTxt.textContent = 'Consulta finalizada com sucesso! Redirecionando...';
+      }, 3600);
 
       setTimeout(() => {
-        if (pBar) pBar.style.width = '100%';
+        loader.classList.add('hidden');
+        form.classList.remove('hidden');
 
-        document.getElementById('resProtocolo').textContent = protocolo;
         document.getElementById('resCnpj').textContent = currentSessionData.cnpj;
         document.getElementById('resTempoCnpj').textContent = tempoCnpj;
         document.getElementById('resDividaEstimada').textContent = divida;
         document.getElementById('resMotivo').textContent = motivo;
-
-        loader.classList.add('hidden');
-        form.classList.remove('hidden');
+        document.getElementById('resProtocolo').textContent = protocolo;
 
         const secao = document.getElementById('secaoAnalise');
         secao.classList.remove('hidden');
@@ -1148,7 +1453,32 @@ header {
 
     document.addEventListener('DOMContentLoaded', () => {
       const cnpjInput = document.getElementById('cnpjInput');
-      if (cnpjInput) cnpjInput.addEventListener('input', e => e.target.value = maskCNPJ(e.target.value));
+      if (cnpjInput) {
+        cnpjInput.addEventListener('input', e => {
+          e.target.value = maskCNPJ(e.target.value);
+          if (cleanDigits(e.target.value).length === 14) {
+            document.getElementById('cnpjError').classList.add('hidden');
+          }
+        });
+        cnpjInput.addEventListener('keydown', e => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            nextStep(2);
+          }
+        });
+      }
+
+      const tempoEl = document.getElementById('tempoCnpjInput');
+      if (tempoEl) tempoEl.addEventListener('change', () => document.getElementById('tempoError').classList.add('hidden'));
+
+      const dividaEl = document.getElementById('dividaEstimadaInput');
+      if (dividaEl) dividaEl.addEventListener('change', () => document.getElementById('dividaError').classList.add('hidden'));
+
+      const motivoEl = document.getElementById('motivoSel');
+      if (motivoEl) motivoEl.addEventListener('change', () => document.getElementById('motivoError').classList.add('hidden'));
+
+      const chkEl = document.getElementById('reqOk');
+      if (chkEl) chkEl.addEventListener('change', () => document.getElementById('checkError').classList.add('hidden'));
     });
 
     // 3D Scroll & Mouse Tilt System
